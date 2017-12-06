@@ -2,14 +2,15 @@
 
 	<PropertyGroup>
 		<TargetFramework>netstandard1.3</TargetFramework>
-		<Version>0.0.5</Version>
+		<Version>0.1.0</Version>
 		<Authors>R2D221</Authors>
 		<Company />
 		<Product />
 		<Description>Analyzer to avoid usage of null in class types. To be used in conjuction with NullableClass</Description>
-		<PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
+		<PackageLicenseUrl>https://github.com/R2D221/NullableClass/blob/master/LICENSE</PackageLicenseUrl>
 		<PackageTags>NullableClass, NullableClass.Analyzer, analyzers, null, nullable, maybe, option</PackageTags>
 		<PackageReleaseNotes>First release</PackageReleaseNotes>
+		<PackageProjectUrl>https://github.com/R2D221/NullableClass</PackageProjectUrl>
 	</PropertyGroup>
 
 	<ItemGroup>

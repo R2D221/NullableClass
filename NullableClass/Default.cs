@@ -12,6 +12,14 @@ namespace NullableClass
 		public static void Set(Func<T> defaultValue) => Default<T>.defaultValue = defaultValue;
 		public static T Get() => defaultValue();
 
+		static Default()
+		{
+			if (typeof(T) == typeof(string))
+			{
+				Default<string>.Set(() => "");
+			}
+		}
+
 		public static T[] NewArray(int length)
 		{
 			var array = new T[length];

@@ -9,14 +9,6 @@ namespace NullableClass
 {
 	public struct NullableOf<T> where T : class
 	{
-		static NullableOf()
-		{
-			if (typeof(T) == typeof(string))
-			{
-				Default<string>.Set(() => "");
-			}
-		}
-
 		private T value;
 
 		public NullableOf([AllowNull] T value)
