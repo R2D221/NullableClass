@@ -123,4 +123,4 @@ Yes, it's very easy to find `Maybe<T>` implementations. However, they focus too 
 
 ## License
 
-MIT, of course.
+[MIT](https://github.com/R2D221/NullableClass/blob/master/LICENSE), of course.
