@@ -13,8 +13,8 @@ This package provides a wrapper class `NullableOf<T>` that behaves similar to `N
 
 There's two packages to install:
 
-* **NullableClass**: The main classes.
-* **NullableClass.Analyzer**: A Roslyn analyzer to forbid the use of a native `null`.
+* **[NullableClass](https://www.nuget.org/packages/NullableClass)**: The main classes.
+* **[NullableClass.Analyzer](https://www.nuget.org/packages/NullableClass.Analyzer)**: A Roslyn analyzer to forbid the use of a native `null`.
 
 ## Usage
 
@@ -115,7 +115,7 @@ If any of the values is null, the rest of the steps won't be computed, and only 
 
 * **Isn't the C# team already solving this issue in C# 8?**
 
-Yes. Well, kinda. They want to keep backwards compatibility, which means they're only issuing warning when the static analysis can detect incorrect null usage. This, unfortunately, completely misses the array case, and as far as I'm concerned, warnings = mere suggestions, despite what anyone would want. So, I'm creating this as an effort to introduce a true concept of nullable / non-nullable classes.
+Yes. Well, kinda. They want to keep backwards compatibility, which means they're only issuing warnings when the static analysis can detect incorrect null usage. This, unfortunately, completely misses the array case, and as far as I'm concerned, warnings = mere suggestions, despite what anyone would want. So, I'm creating this as an effort to introduce a true concept of nullable / non-nullable classes.
 
 * **Aren't there any libraries that already do this?**
 
