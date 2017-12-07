@@ -68,7 +68,6 @@ namespace NullableClass
 	public sealed class RequireStruct<T> where T : struct { private RequireStruct() { } }
 	public sealed class RequireClass<T> where T : class { private RequireClass() { } }
 
-#pragma warning disable CS0618
 	public static class NullableExtensions
 	{
 		public static NullableOf<TResult> Select<T, TResult>(this NullableOf<T> @this, Func<T, TResult> func, RequireClass<TResult> _ = null)
@@ -177,5 +176,4 @@ namespace NullableClass
 			return resultSelector((T)@this, (TMid)mid);
 		}
 	}
-#pragma warning restore CS0618
 }
