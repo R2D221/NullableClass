@@ -9,14 +9,20 @@ namespace NullableClass
 	{
 		private static Func<T> defaultValue;
 
-		public static T Get() => defaultValue();
+		public static T Get()
+		{
+			if (defaultValue == null)
+				throw new InvalidOperationException($"You must configure Default<{typeof(T).Name}> before using it.");
+
+			return defaultValue();
+		}
 
 		public static void Set(Func<T> defaultValue)
 		{
 			if (defaultValue == null)
-				throw new InvalidOperationException("You must provide a non-null delegate for Default<T>.");
+				throw new InvalidOperationException($"You must provide a non-null delegate for Default<{typeof(T).Name}>.");
 			if (Default<T>.defaultValue != null)
-				throw new InvalidOperationException("Delegate for Default<T> must be configured only once.");
+				throw new InvalidOperationException($"Delegate for Default<{typeof(T).Name}> must be configured only once.");
 
 			Default<T>.defaultValue = defaultValue;
 		}
