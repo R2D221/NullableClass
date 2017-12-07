@@ -64,11 +64,9 @@ namespace NullableClass
 			return value.Value;
 		}
 	}
-
-	[Obsolete("Special class for generic type resolution. Don't use directly")]
-	public sealed class RequireStruct<T> where T : struct { }
-	[Obsolete("Special class for generic type resolution. Don't use directly")]
-	public sealed class RequireClass<T> where T : class { }
+	
+	public sealed class RequireStruct<T> where T : struct { private RequireStruct() { } }
+	public sealed class RequireClass<T> where T : class { private RequireClass() { } }
 
 #pragma warning disable CS0618
 	public static class NullableExtensions
