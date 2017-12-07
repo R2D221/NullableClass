@@ -1,5 +1,4 @@
-﻿using NullGuard;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,21 +6,25 @@ using System.Threading.Tasks;
 
 namespace NullableClass
 {
+	/// <summary>
+	/// Represents a reference type that can be assigned `null`.
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
 	public struct NullableOf<T> where T : class
 	{
-		private T value;
+		private readonly T value;
 
-		public NullableOf([AllowNull] T value)
+		public NullableOf(T value)
 		{
 			this.value = value;
 		}
 
 		public bool HasValue => value != null;
 
-		public T Value => value;
+		public T Value => value ?? throw new InvalidOperationException("Nullable object must have a value");
 
-		public T GetValueOrDefault() => HasValue ? value : Default<T>.Get();
-		public T GetValueOrDefault(T defaultValue) => HasValue ? value : defaultValue;
+		public T GetValueOrDefault() => value ?? Default<T>.Get();
+		public T GetValueOrDefault(T defaultValue) => value ?? defaultValue;
 
 		public override bool Equals(object otherObject)
 		{
@@ -51,14 +54,14 @@ namespace NullableClass
 			return HasValue ? value.ToString() : "";
 		}
 
-		public static implicit operator NullableOf<T>([AllowNull] T value)
+		public static implicit operator NullableOf<T>(T value)
 		{
 			return new NullableOf<T>(value);
 		}
 
 		public static explicit operator T(NullableOf<T> value)
 		{
-			return value.value;
+			return value.Value;
 		}
 	}
 

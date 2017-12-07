@@ -12,8 +12,4 @@
 		<PackageLicenseUrl>https://github.com/R2D221/NullableClass/blob/master/LICENSE</PackageLicenseUrl>
 		<PackageProjectUrl>https://github.com/R2D221/NullableClass</PackageProjectUrl>
 	</PropertyGroup>
-
-	<ItemGroup>
-		<PackageReference Include="NullGuard.Fody" Version="1.6.3" PrivateAssets="All" />
-	</ItemGroup>
 </Project>
