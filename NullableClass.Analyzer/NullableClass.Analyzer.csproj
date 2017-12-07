@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>netstandard1.3</TargetFramework>
+		<TargetFrameworks>netstandard1.3;net45</TargetFrameworks>
 		<Version>0.1.0</Version>
 		<Authors>R2D221</Authors>
 		<Company />
@@ -12,6 +12,10 @@
 		<PackageReleaseNotes>First release</PackageReleaseNotes>
 		<PackageProjectUrl>https://github.com/R2D221/NullableClass</PackageProjectUrl>
 	</PropertyGroup>
+	
+	<ItemGroup Condition="'$(TargetFramework)'=='net45'">
+		<Reference Include="System" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Update="NETStandard.Library" PrivateAssets="all" />
