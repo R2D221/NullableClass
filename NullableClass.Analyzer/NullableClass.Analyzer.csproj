@@ -2,14 +2,14 @@
 
 	<PropertyGroup>
 		<TargetFrameworks>netstandard1.3;net45</TargetFrameworks>
-		<Version>0.1.0</Version>
+		<Version>0.2.0</Version>
 		<Authors>R2D221</Authors>
 		<Company />
 		<Product />
 		<Description>Analyzer to avoid usage of null in class types. To be used in conjuction with NullableClass</Description>
 		<PackageLicenseUrl>https://github.com/R2D221/NullableClass/blob/master/LICENSE</PackageLicenseUrl>
 		<PackageTags>NullableClass, NullableClass.Analyzer, analyzers, null, nullable, maybe, option</PackageTags>
-		<PackageReleaseNotes>First release</PackageReleaseNotes>
+		<PackageReleaseNotes>Added .NET Framework 4.5</PackageReleaseNotes>
 		<PackageProjectUrl>https://github.com/R2D221/NullableClass</PackageProjectUrl>
 	</PropertyGroup>
 	
