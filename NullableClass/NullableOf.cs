@@ -1,16 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace NullableClass
 {
+	internal interface INullableOf
+	{
+		bool HasValue { get; }
+		object Value { get; }
+	}
+
 	/// <summary>
 	/// Represents a reference type that can be assigned `null`.
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
-	public struct NullableOf<T> where T : class
+	[DebuggerDisplay("{value}")]
+	public struct NullableOf<T> : INullableOf, IEquatable<NullableOf<T>>, IEquatable<T>
+		where T : class
 	{
 		private readonly T value;
 
@@ -22,33 +31,38 @@ namespace NullableClass
 		public bool HasValue => value != null;
 
 		public T Value => value ?? throw new InvalidOperationException("Nullable object must have a value");
+		object INullableOf.Value => value;
 
 		public T GetValueOrDefault() => value ?? Default<T>.Get();
 		public T GetValueOrDefault(T defaultValue) => value ?? defaultValue;
 
-		public override bool Equals(object otherObject)
+		public override bool Equals(object obj)
 		{
-			if (otherObject == null) return !HasValue;
-
-			if (otherObject is NullableOf<T>)
+			switch (obj)
 			{
-				var other = (NullableOf<T>)otherObject;
-				return this.HasValue == other.HasValue && (!this.HasValue || this.value.Equals(other.value));
+				case null: return !HasValue;
+				case NullableOf<T> x: return Equals(x);
+				case T x: return Equals(x);
+				case INullableOf x: return HasValue == x.HasValue && (!HasValue || value.Equals(x.Value));
+				default: return false;
 			}
+		}
 
-			var otherType = otherObject.GetType();
-			if (!otherType.IsConstructedGenericType || otherType.GetGenericTypeDefinition() != typeof(NullableOf<>))
-			{
-				return HasValue && value.Equals(otherObject);
-			}
+		public bool Equals(NullableOf<T> obj)
+		{
+			return HasValue == obj.HasValue && (!HasValue || value.Equals(obj.Value));
+		}
 
-			return false;
+		public bool Equals(T obj)
+		{
+			return HasValue && value.Equals(obj);
 		}
 
 		public override int GetHashCode()
 		{
 			return HasValue ? value.GetHashCode() : 0;
 		}
+
 		public override string ToString()
 		{
 			return HasValue ? value.ToString() : "";

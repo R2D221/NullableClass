@@ -35,6 +35,12 @@ namespace NullableClass
 			}
 		}
 
+		/// <summary>
+		/// Creates a new array filled with default values for T.
+		/// Warning: Creating a large array may affect performance.
+		/// </summary>
+		/// <param name="length"></param>
+		/// <returns></returns>
 		public static T[] NewArray(int length)
 		{
 			var array = new T[length];
