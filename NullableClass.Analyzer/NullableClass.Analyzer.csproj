@@ -1,21 +1,23 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>netstandard1.3;net45</TargetFrameworks>
-		<Version>0.2.0</Version>
+		<TargetFramework>netstandard1.3</TargetFramework>
+		<PackageTargetFallback>portable-net45+win8+wp8+wpa81</PackageTargetFallback>
+		<IncludeBuildOutput>false</IncludeBuildOutput>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<Version>0.3.0</Version>
 		<Authors>R2D221</Authors>
 		<Company />
 		<Product />
 		<Description>Analyzer to avoid usage of null in class types. To be used in conjuction with NullableClass</Description>
 		<PackageLicenseUrl>https://github.com/R2D221/NullableClass/blob/master/LICENSE</PackageLicenseUrl>
 		<PackageTags>NullableClass, NullableClass.Analyzer, analyzers, null, nullable, maybe, option</PackageTags>
-		<PackageReleaseNotes>Added .NET Framework 4.5</PackageReleaseNotes>
+		<PackageReleaseNotes>Fixed dependencies</PackageReleaseNotes>
 		<PackageProjectUrl>https://github.com/R2D221/NullableClass</PackageProjectUrl>
 	</PropertyGroup>
-	
-	<ItemGroup Condition="'$(TargetFramework)'=='net45'">
-		<Reference Include="System" />
-	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Update="NETStandard.Library" PrivateAssets="all" />
@@ -24,6 +26,11 @@
 		<PackageReference Include="Microsoft.Composition" Version="1.0.31" PrivateAssets="all" />
 		<PackageReference Include="Microsoft.CSharp" Version="4.4.0" PrivateAssets="all" />
 	</ItemGroup>
+
+	<!--<ItemGroup>
+		<Compile Update="Resources.Designer.cs" DesignTime="True" AutoGen="True" DependentUpon="Resources.resx" />
+		<EmbeddedResource Update="Resources.resx" Generator="ResXFileCodeGenerator" LastGenOutput="Resources.Designer.cs" />
+	</ItemGroup>-->
 
 	<ItemGroup>
 		<None Update="tools\*.ps1" CopyToOutputDirectory="Always" Pack="true" PackagePath="" />
