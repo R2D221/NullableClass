@@ -62,6 +62,7 @@ namespace NullableClass.Analyzer
 
 		public override void Initialize(AnalysisContext context)
 		{
+			context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
 			// See https://github.com/dotnet/roslyn/blob/master/docs/analyzers/Analyzer%20Actions%20Semantics.md for more information
 			context.RegisterSyntaxNodeAction(AnalyzeNullOrDefault, SyntaxKind.NullLiteralExpression, SyntaxKind.DefaultExpression);
 			context.RegisterSyntaxNodeAction(AnalyzeField, SyntaxKind.FieldDeclaration);
