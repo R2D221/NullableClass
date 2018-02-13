@@ -12,7 +12,17 @@ namespace NullableClass
 		public static T Get()
 		{
 			if (defaultValue == null)
-				throw new InvalidOperationException($"You must configure Default<{typeof(T).Name}> before using it.");
+			{
+				try
+				{
+					// If found, parameterless constructor will be used to create a default value
+					return Activator.CreateInstance<T>();
+				}
+				catch
+				{
+					throw new InvalidOperationException($"You must configure Default<{typeof(T).Name}> before using it.");
+				}
+			}
 
 			return defaultValue();
 		}
