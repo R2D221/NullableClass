@@ -2,11 +2,11 @@
 
 	<PropertyGroup>
 		<TargetFrameworks>netstandard1.3;net45</TargetFrameworks>
-		<Version>0.2.0</Version>
+		<Version>0.3.0</Version>
 		<Authors>R2D221</Authors>
 		<Description>Helper classes to avoid usage of null in class types. To be used in conjuction with NullableClass.Analyzer</Description>
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-		<PackageReleaseNotes>Added .NET Framework 4.5; added validations and tests.</PackageReleaseNotes>
+		<PackageReleaseNotes>Changed Equals definition, and added Linq extension methods.</PackageReleaseNotes>
 		<Copyright></Copyright>
 		<PackageTags>NullableClass, null, nullable, maybe, option</PackageTags>
 		<PackageLicenseUrl>https://github.com/R2D221/NullableClass/blob/master/LICENSE</PackageLicenseUrl>
