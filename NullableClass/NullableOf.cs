@@ -7,18 +7,12 @@ using System.Threading.Tasks;
 
 namespace NullableClass
 {
-	internal interface INullableOf
-	{
-		bool HasValue { get; }
-		object Value { get; }
-	}
-
 	/// <summary>
 	/// Represents a reference type that can be assigned `null`.
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	[DebuggerDisplay("{value}")]
-	public struct NullableOf<T> : INullableOf, IEquatable<NullableOf<T>>, IEquatable<T>
+	public struct NullableOf<T> : IEquatable<NullableOf<T>>
 		where T : class
 	{
 		private readonly T value;
@@ -31,31 +25,47 @@ namespace NullableClass
 		public bool HasValue => value != null;
 
 		public T Value => value ?? throw new InvalidOperationException("Nullable object must have a value");
-		object INullableOf.Value => value;
 
 		public T GetValueOrDefault() => value ?? Default<T>.Get();
 		public T GetValueOrDefault(T defaultValue) => value ?? defaultValue;
 
+		private static bool Equals(NullableOf<T> left, NullableOf<T> right)
+		{
+			return
+				left.HasValue != right.HasValue ? false :
+				!left.HasValue ? true :
+				EqualityComparer<T>.Default.Equals(left.value, right.value);
+		}
+
 		public override bool Equals(object obj)
 		{
+			// It's not recommended to use Equals(object), and this will most likely only be called by legacy code.
+			// We provide an implementation that strives to be reflexive, symmetric and transitive,
+			// which means a comparison between a nullable type and a non-nullable type must return false,
+			// since the Equals method from the non-nullable type doesn't take the nullable type into account.
+
 			switch (obj)
 			{
-				case null: return !HasValue;
-				case NullableOf<T> x: return Equals(x);
-				case T x: return Equals(x);
-				case INullableOf x: return HasValue == x.HasValue && (!HasValue || value.Equals(x.Value));
+				// We shouldn't be getting nulls if we're using the analyzer as well
+				case null: throw new NullReferenceException();
+				case NullableOf<T> that: return Equals(this, that);
 				default: return false;
 			}
 		}
 
-		public bool Equals(NullableOf<T> obj)
+		public bool Equals(NullableOf<T> that)
 		{
-			return HasValue == obj.HasValue && (!HasValue || value.Equals(obj.Value));
+			return Equals(this, that);
 		}
 
-		public bool Equals(T obj)
+		public static bool operator ==(NullableOf<T> left, NullableOf<T> right)
 		{
-			return HasValue && value.Equals(obj);
+			return Equals(left, right);
+		}
+
+		public static bool operator !=(NullableOf<T> left, NullableOf<T> right)
+		{
+			return !Equals(left, right);
 		}
 
 		public override int GetHashCode()

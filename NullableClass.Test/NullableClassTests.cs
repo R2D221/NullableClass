@@ -73,6 +73,9 @@ namespace NullableClass.Test
 
 			Assert.IsFalse(null_null.Equals(null_a));
 			Assert.IsTrue(null_null.Equals(null_null));
+
+			// This is false because string has no knowledge of NullableOf<string>.
+			Assert.IsFalse(a.Equals(null_a));
 		}
 
 		[TestMethod]
@@ -92,7 +95,8 @@ namespace NullableClass.Test
 			var nullableString = (NullableOf<string>)"a";
 			var nullableObject = (NullableOf<object>)"a";
 
-			Assert.IsTrue(nullableString.Equals(nullableObject));
+			// This is false because the declared types are incompatible
+			Assert.IsFalse(nullableString.Equals(nullableObject));
 		}
 	}
 }
