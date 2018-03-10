@@ -8,14 +8,14 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<Version>0.3.0</Version>
+		<Version>0.4.0</Version>
 		<Authors>R2D221</Authors>
 		<Company />
 		<Product />
 		<Description>Analyzer to avoid usage of null in class types. To be used in conjuction with NullableClass</Description>
 		<PackageLicenseUrl>https://github.com/R2D221/NullableClass/blob/master/LICENSE</PackageLicenseUrl>
 		<PackageTags>NullableClass, NullableClass.Analyzer, analyzers, null, nullable, maybe, option</PackageTags>
-		<PackageReleaseNotes>Fixed dependencies</PackageReleaseNotes>
+		<PackageReleaseNotes>Disabled analyzer on generated code</PackageReleaseNotes>
 		<PackageProjectUrl>https://github.com/R2D221/NullableClass</PackageProjectUrl>
 	</PropertyGroup>
 
