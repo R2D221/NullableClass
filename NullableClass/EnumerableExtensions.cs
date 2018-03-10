@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using NullableClass;
-
 namespace NullableClass
 {
 	public static class EnumerableExtensions
