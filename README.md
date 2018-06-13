@@ -53,15 +53,12 @@ You can also use it on properties and fields (but remember to give them default 
 
 Something that always comes up when discussing non-nullable classes is arrays. How do you create arrays, what values do you use?
 
-Well, this library also includes a helper class `Default<T>`. It lets you define a default value for a given class, and create an array full of default values.
+This library uses the parameterless constructor of a class for its default value. This is used by the `Default<T>` helper class to get the default value and to create an array full of default values.
 
-Just like this:
-
-    Default<string>.Set(() => ""); // This one is already provided by the library
-    Default<Person>.Set(() => new Person("John", "Smith"));
+    var nullableString = default(NullableOf<string>);
+    nullableString.GetValueOrDefault(); // returns "" -- this is a special case
     
-    nullableString.GetValueOrDefault(); // Uses the definition above internally
-    
+    // Uses implicit constructor. Initializes people with default properties
     Person[] arrayOfPeople = Default<Person>.NewArray(10);
     
     // You can create arrays with values just fine
@@ -80,16 +77,6 @@ Just like this:
 
 Of course, the `NewArray` helper method will create a new array and then iterate it and create a new class for each item. Take this into account when creating large arrays so it doesn't affect performance.
 
-You can set the default value in a static constructor, so you guarantee it already exists whenever you need it:
-
-    public class Foo
-    {
-        static Foo()
-        {
-            Default<Foo>.Set(() => new Foo());
-        }
-    }
-
 ### LINQ magic
 
 The library includes extensions for both `Nullable<T>` and `NullableOf<T>` that allow you to use the LINQ syntax for using their inner values:
@@ -102,6 +89,37 @@ The library includes extensions for both `Nullable<T>` and `NullableOf<T>` that 
         select SearchItemInCategory(_category, _id);
 
 If any of the values is null, the rest of the steps won't be computed, and only the null value is returned from the expression. This works similar to the null conditional operator (?.). This is also how monads work, if you're into that kind of thing.
+
+## Enumerable extension methods
+
+You can use LINQ for enumerables as well, but the package includes special methods that instead of returning `default` (which may or may not be null), explicitly returns either a default non-null value, or a null value.
+
+For example, in this LINQ left join:
+
+    var personTable = new[]
+    {
+        new { id = 1, name = "Alice" , locationId = 1 },
+        new { id = 2, name = "Bob"   , locationId = 0 },
+        new { id = 3, name = "Carol" , locationId = 2 },
+    };
+
+    var locationTable = new[]
+    {
+        new { id = 1, country = "USA" },
+        new { id = 2, country = "UK"  }
+    };
+
+    var query =
+        from person in personTable
+        join location in locationTable on person.locationId equals location.id into location_tmp
+        from location in location_tmp.NullIfEmpty()
+        select new
+        {
+            personName = person.name,
+            country = (from l in location select l.country)
+        };
+        
+you can see the use of `NullIfEmpty` instead of `DefaultIfEmpty` that guarantees a `NullableOf<T>` value. There are replacements for `FirstOrDefault` and others as well.
 
 ## Known issues
 
