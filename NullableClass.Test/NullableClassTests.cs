@@ -40,23 +40,39 @@ namespace NullableClass.Test
 			Assert.AreEqual("", string2.GetValueOrDefault());
 		}
 
-		class Window
+		public class Rectangle
 		{
 			public int Width { get; set; }
 			public int Height { get; set; }
 		}
 
 		[TestMethod]
-		public void SettingDefaultValueForNewType()
+		public void GettingDefaultValue()
 		{
-			// This should be set in the static constructor.
-			// Adding it here just for the test.
-			Default<Window>.Set(() => new Window { Width = 500, Height = 350 });
+			var defaultRectangle = Default<Rectangle>.Get();
 
-			var defaultWindow = Default<Window>.Get();
+			Assert.IsNotNull(defaultRectangle);
+			Assert.AreEqual(0, defaultRectangle.Width);
+			Assert.AreEqual(0, defaultRectangle.Height);
+		}
 
-			Assert.IsNotNull(defaultWindow);
-			Assert.AreEqual(500, defaultWindow.Width);
+		public class Person
+		{
+			public string Name { get; set; } = "";
+			
+			public Person(string name)
+			{
+				Name = name;
+			}
+		}
+
+		[TestMethod]
+		public void GettingDefaultValueWithNoParameterlessConstructor()
+		{
+			Assert.Throws<InvalidOperationException>(() =>
+			{
+				var defaultPerson = Default<Person>.Get();
+			});
 		}
 
 		[TestMethod]
