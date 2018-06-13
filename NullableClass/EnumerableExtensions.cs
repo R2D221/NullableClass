@@ -11,37 +11,27 @@ namespace NullableClass
 		{
 			throw new NotImplementedException();
 		}
-		public static IEnumerable<TSource> DefaultIfEmpty_<TSource>(this IEnumerable<TSource> source, RequireClass<TSource> _ = default(RequireClass<TSource>))
+		public static IEnumerable<NullableOf<TSource>> NullIfEmpty<TSource>(this IEnumerable<TSource> source, RequireClass<TSource> _ = default)
 			where TSource : class
 		{
-			return source.DefaultIfEmpty(Default<TSource>.Get());
+			return source.Select(x => (NullableOf<TSource>)x).DefaultIfEmpty(null);
 		}
-		public static IEnumerable<TSource> DefaultIfEmpty_<TSource>(this IEnumerable<TSource> source, RequireStruct<TSource> _ = default(RequireStruct<TSource>))
+		public static IEnumerable<Nullable<TSource>> NullIfEmpty<TSource>(this IEnumerable<TSource> source, RequireStruct<TSource> _ = default)
 			where TSource : struct
 		{
-			return source.DefaultIfEmpty(default(TSource));
+			return source.Select(x => (Nullable<TSource>)x).DefaultIfEmpty(null);
 		}
-		public static IEnumerable<NullableOf<TSource>> DefaultIfEmpty_<TSource>(this IEnumerable<NullableOf<TSource>> source)
-			where TSource : class
-		{
-			return source.DefaultIfEmpty(null);
-		}
-		public static IEnumerable<Nullable<TSource>> DefaultIfEmpty_<TSource>(this IEnumerable<Nullable<TSource>> source)
-			where TSource : struct
-		{
-			return source.DefaultIfEmpty(null);
-		}
-		
+
 		public static TSource ElementAtOrDefault<TSource>(this IEnumerable<TSource> source, int index)
 		{
 			throw new NotImplementedException();
 		}
-		public static TSource ElementAtOrDefault_<TSource>(this IEnumerable<TSource> source, int index, RequireClass<TSource> _ = default(RequireClass<TSource>))
+		public static TSource ElementAtOrDefault_<TSource>(this IEnumerable<TSource> source, int index, RequireClass<TSource> _ = default)
 			where TSource : class
 		{
 			return Enumerable.ElementAtOrDefault(source, index) ?? Default<TSource>.Get();
 		}
-		public static TSource ElementAtOrDefault_<TSource>(this IEnumerable<TSource> source, int index, RequireStruct<TSource> _ = default(RequireStruct<TSource>))
+		public static TSource ElementAtOrDefault_<TSource>(this IEnumerable<TSource> source, int index, RequireStruct<TSource> _ = default)
 			where TSource : struct
 		{
 			return Enumerable.ElementAtOrDefault(source, index);
@@ -56,17 +46,27 @@ namespace NullableClass
 		{
 			return Enumerable.ElementAtOrDefault(source, index);
 		}
+		public static NullableOf<TSource> ElementAtOrNull<TSource>(this IEnumerable<TSource> source, int index, RequireClass<TSource> _ = default)
+			where TSource : class
+		{
+			return Enumerable.ElementAtOrDefault(source.Select(x => (NullableOf<TSource>)x), index);
+		}
+		public static Nullable<TSource> ElementAtOrNull<TSource>(this IEnumerable<TSource> source, int index, RequireStruct<TSource> _ = default)
+			where TSource : struct
+		{
+			return Enumerable.ElementAtOrDefault(source.Select(x => (Nullable<TSource>)x), index);
+		}
 
 		public static TSource FirstOrDefault<TSource>(this IEnumerable<TSource> source)
 		{
 			throw new NotImplementedException();
 		}
-		public static TSource FirstOrDefault_<TSource>(this IEnumerable<TSource> source, RequireClass<TSource> _ = default(RequireClass<TSource>))
+		public static TSource FirstOrDefault_<TSource>(this IEnumerable<TSource> source, RequireClass<TSource> _ = default)
 			where TSource : class
 		{
 			return Enumerable.FirstOrDefault(source) ?? Default<TSource>.Get();
 		}
-		public static TSource FirstOrDefault_<TSource>(this IEnumerable<TSource> source, RequireStruct<TSource> _ = default(RequireStruct<TSource>))
+		public static TSource FirstOrDefault_<TSource>(this IEnumerable<TSource> source, RequireStruct<TSource> _ = default)
 			where TSource : struct
 		{
 			return Enumerable.FirstOrDefault(source);
@@ -81,17 +81,27 @@ namespace NullableClass
 		{
 			return Enumerable.FirstOrDefault(source);
 		}
-		
+		public static NullableOf<TSource> FirstOrNull<TSource>(this IEnumerable<TSource> source, RequireClass<TSource> _ = default)
+			where TSource : class
+		{
+			return Enumerable.FirstOrDefault(source.Select(x => (NullableOf<TSource>)x));
+		}
+		public static Nullable<TSource> FirstOrNull<TSource>(this IEnumerable<TSource> source, RequireStruct<TSource> _ = default)
+			where TSource : struct
+		{
+			return Enumerable.FirstOrDefault(source.Select(x => (Nullable<TSource>)x));
+		}
+
 		public static TSource LastOrDefault<TSource>(this IEnumerable<TSource> source)
 		{
 			throw new NotImplementedException();
 		}
-		public static TSource LastOrDefault_<TSource>(this IEnumerable<TSource> source, RequireClass<TSource> _ = default(RequireClass<TSource>))
+		public static TSource LastOrDefault_<TSource>(this IEnumerable<TSource> source, RequireClass<TSource> _ = default)
 			where TSource : class
 		{
 			return Enumerable.LastOrDefault(source) ?? Default<TSource>.Get();
 		}
-		public static TSource LastOrDefault_<TSource>(this IEnumerable<TSource> source, RequireStruct<TSource> _ = default(RequireStruct<TSource>))
+		public static TSource LastOrDefault_<TSource>(this IEnumerable<TSource> source, RequireStruct<TSource> _ = default)
 			where TSource : struct
 		{
 			return Enumerable.LastOrDefault(source);
@@ -106,17 +116,27 @@ namespace NullableClass
 		{
 			return Enumerable.LastOrDefault(source);
 		}
-		
+		public static NullableOf<TSource> LastOrNull<TSource>(this IEnumerable<TSource> source, RequireClass<TSource> _ = default)
+			where TSource : class
+		{
+			return Enumerable.LastOrDefault(source.Select(x => (NullableOf<TSource>)x));
+		}
+		public static Nullable<TSource> LastOrNull<TSource>(this IEnumerable<TSource> source, RequireStruct<TSource> _ = default)
+			where TSource : struct
+		{
+			return Enumerable.LastOrDefault(source.Select(x => (Nullable<TSource>)x));
+		}
+
 		public static TSource SingleOrDefault<TSource>(this IEnumerable<TSource> source)
 		{
 			throw new NotImplementedException();
 		}
-		public static TSource SingleOrDefault_<TSource>(this IEnumerable<TSource> source, RequireClass<TSource> _ = default(RequireClass<TSource>))
+		public static TSource SingleOrDefault_<TSource>(this IEnumerable<TSource> source, RequireClass<TSource> _ = default)
 			where TSource : class
 		{
 			return Enumerable.SingleOrDefault(source) ?? Default<TSource>.Get();
 		}
-		public static TSource SingleOrDefault_<TSource>(this IEnumerable<TSource> source, RequireStruct<TSource> _ = default(RequireStruct<TSource>))
+		public static TSource SingleOrDefault_<TSource>(this IEnumerable<TSource> source, RequireStruct<TSource> _ = default)
 			where TSource : struct
 		{
 			return Enumerable.SingleOrDefault(source);
@@ -131,17 +151,27 @@ namespace NullableClass
 		{
 			return Enumerable.SingleOrDefault(source);
 		}
+		public static NullableOf<TSource> SingleOrNull<TSource>(this IEnumerable<TSource> source, RequireClass<TSource> _ = default)
+			where TSource : class
+		{
+			return Enumerable.SingleOrDefault(source.Select(x => (NullableOf<TSource>)x));
+		}
+		public static Nullable<TSource> SingleOrNull<TSource>(this IEnumerable<TSource> source, RequireStruct<TSource> _ = default)
+			where TSource : struct
+		{
+			return Enumerable.SingleOrDefault(source.Select(x => (Nullable<TSource>)x));
+		}
 
 		public static TSource FirstOrDefault<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate)
 		{
 			throw new NotImplementedException();
 		}
-		public static TSource FirstOrDefault_<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate, RequireClass<TSource> _ = default(RequireClass<TSource>))
+		public static TSource FirstOrDefault_<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate, RequireClass<TSource> _ = default)
 			where TSource : class
 		{
 			return Enumerable.FirstOrDefault(source, predicate) ?? Default<TSource>.Get();
 		}
-		public static TSource FirstOrDefault_<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate, RequireStruct<TSource> _ = default(RequireStruct<TSource>))
+		public static TSource FirstOrDefault_<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate, RequireStruct<TSource> _ = default)
 			where TSource : struct
 		{
 			return Enumerable.FirstOrDefault(source, predicate);
@@ -156,17 +186,27 @@ namespace NullableClass
 		{
 			return Enumerable.FirstOrDefault(source, predicate);
 		}
+		public static NullableOf<TSource> FirstOrNull<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate, RequireClass<TSource> _ = default)
+			where TSource : class
+		{
+			return source.Where(predicate).FirstOrNull();
+		}
+		public static Nullable<TSource> FirstOrNull<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate, RequireStruct<TSource> _ = default)
+			where TSource : struct
+		{
+			return source.Where(predicate).FirstOrNull();
+		}
 
 		public static TSource LastOrDefault<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate)
 		{
 			throw new NotImplementedException();
 		}
-		public static TSource LastOrDefault_<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate, RequireClass<TSource> _ = default(RequireClass<TSource>))
+		public static TSource LastOrDefault_<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate, RequireClass<TSource> _ = default)
 			where TSource : class
 		{
 			return Enumerable.LastOrDefault(source, predicate) ?? Default<TSource>.Get();
 		}
-		public static TSource LastOrDefault_<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate, RequireStruct<TSource> _ = default(RequireStruct<TSource>))
+		public static TSource LastOrDefault_<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate, RequireStruct<TSource> _ = default)
 			where TSource : struct
 		{
 			return Enumerable.LastOrDefault(source, predicate);
@@ -181,17 +221,27 @@ namespace NullableClass
 		{
 			return Enumerable.LastOrDefault(source, predicate);
 		}
+		public static NullableOf<TSource> LastOrNull<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate, RequireClass<TSource> _ = default)
+			where TSource : class
+		{
+			return source.Where(predicate).LastOrNull();
+		}
+		public static Nullable<TSource> LastOrNull<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate, RequireStruct<TSource> _ = default)
+			where TSource : struct
+		{
+			return source.Where(predicate).LastOrNull();
+		}
 
 		public static TSource SingleOrDefault<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate)
 		{
 			throw new NotImplementedException();
 		}
-		public static TSource SingleOrDefault_<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate, RequireClass<TSource> _ = default(RequireClass<TSource>))
+		public static TSource SingleOrDefault_<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate, RequireClass<TSource> _ = default)
 			where TSource : class
 		{
 			return Enumerable.SingleOrDefault(source, predicate) ?? Default<TSource>.Get();
 		}
-		public static TSource SingleOrDefault_<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate, RequireStruct<TSource> _ = default(RequireStruct<TSource>))
+		public static TSource SingleOrDefault_<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate, RequireStruct<TSource> _ = default)
 			where TSource : struct
 		{
 			return Enumerable.SingleOrDefault(source, predicate);
@@ -205,6 +255,16 @@ namespace NullableClass
 			where TSource : struct
 		{
 			return Enumerable.SingleOrDefault(source, predicate);
+		}
+		public static NullableOf<TSource> SingleOrNull<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate, RequireClass<TSource> _ = default)
+			where TSource : class
+		{
+			return source.Where(predicate).SingleOrNull();
+		}
+		public static Nullable<TSource> SingleOrNull<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate, RequireStruct<TSource> _ = default)
+			where TSource : struct
+		{
+			return source.Where(predicate).SingleOrNull();
 		}
 	}
 }

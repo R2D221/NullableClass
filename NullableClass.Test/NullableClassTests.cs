@@ -118,31 +118,36 @@ namespace NullableClass.Test
 		}
 
 		[TestMethod]
-		public void DefaultIfEmpty_WithEmptyLists()
+		public void NullIfEmpty_LINQJoins()
 		{
-			var list1 = new List<string	>();
-			var list2 = new List<int	>();
-			var list3 = new List<NullableOf<string>	>();
-			var list4 = new List<Nullable<int>	>();
-			
-			Assert.AreEqual(""	, list1.DefaultIfEmpty_().First());
-			Assert.AreEqual(0	, list2.DefaultIfEmpty_().First());
-			Assert.AreEqual(null	, list3.DefaultIfEmpty_().First());
-			Assert.AreEqual(null	, list4.DefaultIfEmpty_().First());
-		}
+			var personTable = new[]
+			{
+				new { id = 1, name = "Alice"	, locationId = 1 },
+				new { id = 2, name = "Bob"	, locationId = 0 },
+				new { id = 3, name = "Carol"	, locationId = 2 },
+			};
 
-		[TestMethod]
-		public void DefaultIfEmpty_WithFilledLists()
-		{
-			var list1 = new List<string	> { "a"	};
-			var list2 = new List<int	> { 5	};
-			var list3 = new List<NullableOf<string>	> { "a"	};
-			var list4 = new List<Nullable<int>	> { 5	};
+			var locationTable = new[]
+			{
+				new { id = 1, country = "USA"	},
+				new { id = 2, country = "UK"	}
+			};
 
-			Assert.AreEqual("a"	, list1.DefaultIfEmpty_().First());
-			Assert.AreEqual(5	, list2.DefaultIfEmpty_().First());
-			Assert.AreEqual("a"	, list3.DefaultIfEmpty_().First());
-			Assert.AreEqual(5	, list4.DefaultIfEmpty_().First());
+			var query =
+				from person in personTable
+				join location in locationTable on person.locationId equals location.id into location_tmp
+				from location in location_tmp.NullIfEmpty()
+				select new
+				{
+					personName = person.name,
+					country = (from l in location select l.country)
+				};
+
+			var list = query.ToList();
+
+			Assert.AreEqual(list[0].country, "USA"	);
+			Assert.AreEqual(list[1].country, null	);
+			Assert.AreEqual(list[2].country, "UK"	);
 		}
 
 		[TestMethod]
